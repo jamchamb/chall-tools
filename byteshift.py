@@ -35,7 +35,6 @@ def main():
     # Shift and output
     if len(data) == 0:
         print "Empty file"
-        sys.exit(1)
     else:
         with open(args.outfile, "wb") as of:
             of.write(shift_bytes(data,shift,mod))
