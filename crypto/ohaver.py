@@ -62,12 +62,10 @@ def analyze(cipher_text):
             print '\t',
             for ct_trigram in ct_trigrams[pos:pos+per_row]:
                 print ct_trigram,
-            print ''
-            print '\t',
+            print '\n\t',
             for key in keys[pt_trigram][pos:pos+per_row]:
                 print key,
-            print ''
-            print ''
+            print '\n'
             pos += per_row
             
 def main():
