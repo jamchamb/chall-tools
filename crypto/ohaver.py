@@ -1,4 +1,7 @@
 # Vigenere analysis with Ohaver routine
+# Generates a list of all possible trigrams in the ciphertext and then
+# determines the keys that would have been needed to reach that ciphertext
+# from common plaintext trigrams. May reveal fragments of the key.
 import argparse   
 
 def all_trigrams(text):
@@ -12,22 +15,6 @@ def letter_to_num(letter):
 
 def num_to_letter(num):
     return chr(num-1 + ord('A'))
-
-def vigenere(plain, key):
-    key_pos = 0
-    ct = ""
-    for i in range(len(plain)):
-        p = plain[i]
-        k = key[key_pos]
-        p_val = letter_to_num(p)
-        k_val = letter_to_num(k)
-        c_val = p_val + k_val
-        if c_val > 26:
-            c_val = (c_val%26)+1
-        c = num_to_letter(c_val)
-        ct += c
-        key_pos = (key_pos+1) % len(key)
-    return ct
 
 def reverse_vigenere(plain, cipher):
     """ Determine the key that would have been applied to
