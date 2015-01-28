@@ -40,7 +40,11 @@ def analyze(cipher_text):
     cipher_text = cipher_text.replace('\r','').replace('\n','').replace(' ','').upper()
     
     ct_trigrams = all_trigrams(cipher_text)
-    pt_trigrams = ['THE','AND','THA','ENT','ION','TIO']
+    pt_trigrams = [
+        'THE','AND','THA','ENT','ING','ION',
+        'TIO','FOR','NDE','HAS','NCE','EDT',
+        'TIS','OFT','STH','MEN'
+    ]
     
     keys = {}
 
