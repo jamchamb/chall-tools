@@ -3,18 +3,13 @@
 # determines the keys that would have been needed to reach that ciphertext
 # from common plaintext trigrams. May reveal fragments of the key.
 import argparse   
+from crypta import letter_to_num, num_to_letter
 
 def all_trigrams(text):
     trigrams = []
     for i in range(len(text) - 2):
         trigrams.append(text[i:i+3])
     return trigrams
-
-def letter_to_num(letter):
-    return ord(letter) - ord('A') + 1
-
-def num_to_letter(num):
-    return chr(num-1 + ord('A'))
 
 def reverse_vigenere(plain, cipher):
     """ Determine the key that would have been applied to
@@ -36,7 +31,7 @@ def reverse_vigenere(plain, cipher):
 
     return key
         
-def analyze(cipher_text):
+def analyze(cipher_text, trigrams=None):
     cipher_text = cipher_text.replace('\r','').replace('\n','').replace(' ','').upper()
     
     ct_trigrams = all_trigrams(cipher_text)
@@ -45,6 +40,9 @@ def analyze(cipher_text):
         'TIO','FOR','NDE','HAS','NCE','EDT',
         'TIS','OFT','STH','MEN'
     ]
+
+    if trigrams != None:
+        pt_trigrams = trigrams
     
     keys = {}
 
@@ -73,15 +71,24 @@ def analyze(cipher_text):
             pos += per_row
             
 def main():
-    parser = argparse.ArgumentParser("ohaver.py")
+    parser = argparse.ArgumentParser()
     parser.add_argument("ctfile", help="ciphertext file")
-
+    parser.add_argument("-t", "--trigrams", help="comma-separated plaintext trigrams to use")
+    
     args = parser.parse_args()
 
     with open(args.ctfile, 'r') as ctfile:
         cipher_text = ctfile.read()
 
-    analyze(cipher_text)
+    if args.trigrams == None:
+        analyze(cipher_text)
+    else:
+        trigrams = args.trigrams.split(',')
+        for trigram in trigrams:
+            if len(trigram) != 3:
+                print "Invalid trigram", trigram
+                return
+        analyze(cipher_text, trigrams)
         
 if __name__ == "__main__":
     main()
