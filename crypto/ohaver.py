@@ -44,13 +44,22 @@ def analyze(cipher_text, trigrams=None):
     if trigrams != None:
         pt_trigrams = trigrams
     
+    # Key fragments that produce desired plaintext trigram
     keys = {}
+    # Table of key fragments to find multiple occurrences of a fragment
+    reverse_index = {}
 
     # Build key fragments that would get ct from pt
     for pt_trigram in pt_trigrams:
         pt_vig = []
         for ct_trigram in ct_trigrams:
-            pt_vig.append(reverse_vigenere(pt_trigram,ct_trigram))
+            fragment = reverse_vigenere(pt_trigram,ct_trigram)
+            pt_vig.append(fragment)
+            if reverse_index.get(fragment) == None:
+                reverse_index[fragment] = [pt_trigram]
+            else:
+                if pt_trigram not in reverse_index[fragment]:
+                    reverse_index[fragment].append(pt_trigram)
         keys[pt_trigram] = pt_vig
 
     # Display the results
@@ -69,6 +78,11 @@ def analyze(cipher_text, trigrams=None):
                 print key,
             print '\n'
             pos += per_row
+
+    for frag in reverse_index:
+        if len(reverse_index[frag]) > 1:
+            print frag, reverse_index[frag]
+            
             
 def main():
     parser = argparse.ArgumentParser()
