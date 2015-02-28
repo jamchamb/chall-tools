@@ -1,7 +1,12 @@
+#!/usr/bin/env python
+# ohaver.py
 # Vigenere analysis with Ohaver routine
+#
 # Generates a list of all possible trigrams in the ciphertext and then
 # determines the keys that would have been needed to reach that ciphertext
 # from common plaintext trigrams. May reveal fragments of the key.
+#
+# `ohaver.py -h` for usage
 import argparse   
 from crypta import letter_to_num, num_to_letter
 

@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# byteshift.py
 # Caesar cipher on bytes rather than just alphabet
-# usage: byteshift.py [-h] [-m MODULO] infile outfile shift
+#
+# `byteshift.py -h` for usage
 import argparse
 
 def shift_bytes(data, shift, mod):

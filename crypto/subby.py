@@ -1,5 +1,10 @@
-# Helps with substitution ciphers that use something other than
-# single alphabetic characters.
+#!/usr/bin/env python
+# subby.py
+# Aids in transforming multi-character symbols of a non-standard substitution cipher
+# into single, printable characters. Also displays frequency of the non-standard
+# symbols.
+#
+# `subby.py -h` for usage
 import argparse
 from crypta import num_to_letter
 
