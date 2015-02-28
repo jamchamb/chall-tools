@@ -8,6 +8,21 @@
 import argparse
 from crypta import num_to_letter
 
+def transform_symbols(ciphertext, separator):
+    counts = {}
+    symbols = {}
+    symbol = 1
+
+    for group in ciphertext.split(separator):
+        if counts.has_key(group):
+            counts[group] += 1
+        else:
+            counts[group] = 1
+            symbols[group] = num_to_letter(symbol)
+            symbol += 1
+
+    return (counts,symbols)
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("ctfile", help="ciphertext file")
@@ -27,15 +42,7 @@ def main():
     else:
         separator = ' '
         
-    for group in contents.split(separator):
-        if counts.has_key(group):
-            counts[group] += 1
-        else:
-            counts[group] = 1
-            symbols[group] = num_to_letter(symbol)
-            symbol += 1
-            print symbols[group],
-    print ""
+    counts,symbols = transform_symbols(contents, separator)
         
     print "Size of table: " + str(len(counts))
 
