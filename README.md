@@ -3,6 +3,7 @@ Scripts and tools I write to help solve challenges (cryptography, steganography,
 reverse engineering, etc.).
 
 ## Cryptography
+
 ### `subby.py`
 Aids in transforming multi-character symbols of a non-standard substitution cipher
 into single, printable characters. Also displays a frequency count of the symbols,
@@ -15,6 +16,11 @@ ciphertext corresponds to a common (or specified) plaintext trigram, and then li
 the key fragment that would produce such a result. Likely key fragments can then be
 used in further analysis.
 
-## Miscellaneous
 ### `byteshift.py`
-Essentially the Caesar cipher, but applied to bytes instead of letters of the alphabet.
+Caesar cipher applied to bytes instead of letters.
+
+## Miscellaneous
+
+### `modmath.py`
+Some useful calculations performed with modular arithmetic (factorial, division,
+binomial coefficient, etc.).
