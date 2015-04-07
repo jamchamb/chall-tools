@@ -19,6 +19,11 @@ used in further analysis.
 ### `byteshift.py`
 Caesar cipher applied to bytes instead of letters.
 
+## Exploits
+
+### `input_gen.py`
+Generates test inputs for buffer overflow attacks.
+
 ## Miscellaneous
 
 ### `modmath.py`
