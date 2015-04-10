@@ -19,6 +19,9 @@ used in further analysis.
 ### `byteshift.py`
 Caesar cipher applied to bytes instead of letters.
 
+### `crypta.py`
+Various helper methods: convert letters to numbers, convert hex, escape non-printable characters in a string, score string by letter frequency, etc.
+
 ## Exploits
 
 ### `input_gen.py`
