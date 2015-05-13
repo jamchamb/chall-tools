@@ -26,6 +26,7 @@ def xor_bytes(b1, b2):
     return result
 
 def escape_nonprintables(s):
+    '''Print hex codes for non-printable characters and line breaks'''
     result = ''
     printable = string.ascii_letters + string.digits + string.punctuation + ' '
     for c in s:
@@ -34,6 +35,13 @@ def escape_nonprintables(s):
         else:
             result += c
     return result
+
+def contains_nonprintables(s):
+    '''Check if non-printable characters are in the string'''
+    for c in s:
+        if c not in string.printable:
+            return True
+    return False
 
 def char_frequency(text):
     # Count character occurrences
