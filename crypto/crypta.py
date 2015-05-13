@@ -20,9 +20,10 @@ def hex_to_b64(s):
     return bytes_to_b64(hex_to_bytes(s))
 
 def xor_bytes(b1, b2):
+    '''XOR bytes, repeating b2 as necessary'''
     result = ''
     for i in range(len(b1)):
-        result += chr(ord(b1[i]) ^ ord(b2[i]))
+        result += chr(ord(b1[i]) ^ ord(b2[i%len(b2)]))
     return result
 
 def escape_nonprintables(s):
