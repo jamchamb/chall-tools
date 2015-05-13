@@ -26,6 +26,21 @@ def xor_bytes(b1, b2):
         result += chr(ord(b1[i]) ^ ord(b2[i%len(b2)]))
     return result
 
+def hamming_distance(b1, b2):
+    '''Get Hamming distance for two sequences of bytes'''
+    if len(b1) != len(b2):
+        raise Exception("Length of both sequences must match")
+
+    result = 0
+    for i in range(len(b1)):
+        c1 = ord(b1[i])
+        c2 = ord(b2[i])
+        # Each 1 bit represents a difference
+        diff = c1^c2
+        for j in range(8):
+            result += (diff >> j) & 1
+    return result
+
 def escape_nonprintables(s):
     '''Print hex codes for non-printable characters and line breaks'''
     result = ''
