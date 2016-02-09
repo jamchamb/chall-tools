@@ -6,7 +6,7 @@
 #
 # `subby.py -h` for usage
 import argparse
-from crypta import num_to_letter
+from etao import num_to_letter
 
 def transform_symbols(ciphertext, separator):
     counts = {}
@@ -36,14 +36,14 @@ def main():
     counts = {}
     symbols = {}
     symbol = 1
-    
+
     if args.separator != None:
         separator = args.separator
     else:
         separator = ' '
-        
+
     counts,symbols = transform_symbols(contents, separator)
-        
+
     print "Size of table: " + str(len(counts))
 
     # Sort by frequency and print
@@ -51,6 +51,6 @@ def main():
     sorted_counts.reverse()
     for item in sorted_counts:
         print item[0] + "\t" + symbols[item[0]] + "\t" + str(item[1])
-    
+
 if __name__ == "__main__":
     main()

@@ -7,8 +7,8 @@
 # from common plaintext trigrams. May reveal fragments of the key.
 #
 # `ohaver.py -h` for usage
-import argparse   
-from crypta import letter_to_num, num_to_letter
+import argparse
+from etao import letter_to_num, num_to_letter
 
 def all_trigrams(text):
     trigrams = []
@@ -25,7 +25,7 @@ def reverse_vigenere(plain, cipher):
         raise Exception("Plaintext and ciphertext length must match")
 
     key = ""
-    
+
     for i in range(len(cipher)):
         c = letter_to_num(cipher[i])
         p = letter_to_num(plain[i])
@@ -35,10 +35,10 @@ def reverse_vigenere(plain, cipher):
         key += num_to_letter(k+1)
 
     return key
-        
+
 def analyze(cipher_text, trigrams=None):
     cipher_text = cipher_text.replace('\r','').replace('\n','').replace(' ','').upper()
-    
+
     ct_trigrams = all_trigrams(cipher_text)
     pt_trigrams = [
         'THE','AND','THA','ENT','ING','ION',
@@ -48,7 +48,7 @@ def analyze(cipher_text, trigrams=None):
 
     if trigrams != None:
         pt_trigrams = trigrams
-    
+
     # Key fragments that produce desired plaintext trigram
     keys = {}
     # Table of key fragments to find multiple occurrences of a fragment
@@ -87,13 +87,13 @@ def analyze(cipher_text, trigrams=None):
     for frag in reverse_index:
         if len(reverse_index[frag]) > 1:
             print frag, reverse_index[frag]
-            
-            
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("ctfile", help="ciphertext file")
     parser.add_argument("-t", "--trigrams", help="comma-separated plaintext trigrams to use")
-    
+
     args = parser.parse_args()
 
     with open(args.ctfile, 'r') as ctfile:
@@ -108,6 +108,6 @@ def main():
                 print "Invalid trigram", trigram
                 return
         analyze(cipher_text, trigrams)
-        
+
 if __name__ == "__main__":
     main()
