@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # subby.py
-# Aids in transforming multi-character symbols of a non-standard substitution cipher
-# into single, printable characters. Also displays frequency of the non-standard
-# symbols.
+# Aids in transforming multi-character symbols of a non-standard substitution
+# cipher into single, printable characters. Also displays frequency of the
+# non-standard symbols.
 #
 # `subby.py -h` for usage
 import argparse
@@ -27,7 +27,10 @@ def transform_symbols(ciphertext, separator):
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description="""Aids in transforming multi-character symbols of a
+        non-standard substitution cipher into single, printable characters.
+        Also displays frequency of the non-standard symbols.""")
     parser.add_argument("ctfile", help="ciphertext file")
     parser.add_argument("-s", "--separator",
                         help="group separator (defaults to whitespace)")
