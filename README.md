@@ -20,7 +20,7 @@ used in further analysis.
 Caesar cipher applied to bytes instead of letters.
 
 ### `crypta.py`
-Various helper methods: convert letters to numbers, convert hex, escape non-printable characters in a string, score string by letter frequency, etc.
+This has turned into a separate Python library. See [etao](https://github.com/jamchamb/etao).
 
 ## Exploits
 
