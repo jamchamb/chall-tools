@@ -6,27 +6,31 @@
 #
 # `subby.py -h` for usage
 import argparse
-from etao import num_to_letter
+
+SYMBOL_TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+
 
 def transform_symbols(ciphertext, separator):
     counts = {}
     symbols = {}
-    symbol = 1
+    symbol = 0
 
     for group in ciphertext.split(separator):
-        if counts.has_key(group):
+        if group in counts:
             counts[group] += 1
         else:
             counts[group] = 1
-            symbols[group] = num_to_letter(symbol)
+            symbols[group] = SYMBOL_TABLE[symbol]
             symbol += 1
 
-    return (counts,symbols)
+    return (counts, symbols)
+
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("ctfile", help="ciphertext file")
-    parser.add_argument("-s", "--separator", help="group separator (default SPACE)")
+    parser.add_argument("-s", "--separator",
+                        help="group separator (defaults to whitespace)")
 
     args = parser.parse_args()
 
@@ -35,22 +39,21 @@ def main():
 
     counts = {}
     symbols = {}
-    symbol = 1
 
-    if args.separator != None:
+    if args.separator is not None:
         separator = args.separator
     else:
-        separator = ' '
+        separator = None
 
-    counts,symbols = transform_symbols(contents, separator)
+    counts, symbols = transform_symbols(contents, separator)
 
-    print "Size of table: " + str(len(counts))
+    print "Size of table: ", len(counts)
 
     # Sort by frequency and print
     sorted_counts = sorted(counts.items(), key=lambda t: t[1])
     sorted_counts.reverse()
     for item in sorted_counts:
-        print item[0] + "\t" + symbols[item[0]] + "\t" + str(item[1])
+        print "\"%s\"\t%s\t%d" % (item[0], symbols[item[0]], item[1])
 
 if __name__ == "__main__":
     main()
