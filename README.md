@@ -25,7 +25,7 @@ This has turned into a separate Python library. See [etao](https://github.com/ja
 ## Exploits
 
 ### `input_gen.py`
-Generates test inputs for buffer overflow attacks.
+Generate test buffers for memory corruption attacks.
 
 ## Miscellaneous
 
