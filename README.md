@@ -27,8 +27,15 @@ This has turned into a separate Python library. See [etao](https://github.com/ja
 ### `input_gen.py`
 Generate test buffers for memory corruption attacks.
 
-## Miscellaneous
+## Math
 
 ### `modmath.py`
 Some useful calculations performed with modular arithmetic (factorial, division,
 binomial coefficient, etc.).
+
+## Web Apps
+
+### `find_dirs.py`
+Find valid directories on an HTTP server using a wordlist.
+Some good lists can be found in the web content discovery section
+of [SecLists](https://github.com/danielmiessler/SecLists).
