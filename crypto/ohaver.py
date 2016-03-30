@@ -10,11 +10,13 @@
 import argparse
 from etao import letter_to_num, num_to_letter
 
+
 def all_trigrams(text):
     trigrams = []
     for i in range(len(text) - 2):
         trigrams.append(text[i:i+3])
     return trigrams
+
 
 def reverse_vigenere(plain, cipher):
     """ Determine the key that would have been applied to
@@ -36,14 +38,15 @@ def reverse_vigenere(plain, cipher):
 
     return key
 
+
 def analyze(cipher_text, trigrams=None):
-    cipher_text = cipher_text.replace('\r','').replace('\n','').replace(' ','').upper()
+    cipher_text = cipher_text.replace('\r', '').replace('\n', '').replace(' ', '').upper()
 
     ct_trigrams = all_trigrams(cipher_text)
     pt_trigrams = [
-        'THE','AND','THA','ENT','ING','ION',
-        'TIO','FOR','NDE','HAS','NCE','EDT',
-        'TIS','OFT','STH','MEN'
+        'THE', 'AND', 'THA', 'ENT', 'ING', 'ION',
+        'TIO', 'FOR', 'NDE', 'HAS', 'NCE', 'EDT',
+        'TIS', 'OFT', 'STH', 'MEN'
     ]
 
     if trigrams != None:
@@ -58,7 +61,7 @@ def analyze(cipher_text, trigrams=None):
     for pt_trigram in pt_trigrams:
         pt_vig = []
         for ct_trigram in ct_trigrams:
-            fragment = reverse_vigenere(pt_trigram,ct_trigram)
+            fragment = reverse_vigenere(pt_trigram, ct_trigram)
             pt_vig.append(fragment)
             if reverse_index.get(fragment) == None:
                 reverse_index[fragment] = [pt_trigram]
@@ -92,7 +95,8 @@ def analyze(cipher_text, trigrams=None):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("ctfile", help="ciphertext file")
-    parser.add_argument("-t", "--trigrams", help="comma-separated plaintext trigrams to use")
+    parser.add_argument("-t", "--trigrams",
+                        help="comma-separated plaintext trigrams to use")
 
     args = parser.parse_args()
 
