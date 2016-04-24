@@ -6,6 +6,7 @@
 #
 # `subby.py -h` for usage
 import argparse
+import etao
 
 SYMBOL_TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
@@ -15,7 +16,12 @@ def transform_symbols(ciphertext, separator):
     symbols = {}
     symbol = 0
 
-    for group in ciphertext.split(separator):
+    if separator is False:
+        contents = ciphertext
+    else:
+        contents = ciphertext.split(separator)
+
+    for group in contents:
         if group in counts:
             counts[group] += 1
         else:
@@ -32,8 +38,12 @@ def main():
         non-standard substitution cipher into single, printable characters.
         Also displays frequency of the non-standard symbols.""")
     parser.add_argument("ctfile", help="ciphertext file")
-    parser.add_argument("-s", "--separator",
-                        help="group separator (defaults to whitespace)")
+
+    sep_group = parser.add_mutually_exclusive_group()
+    sep_group.add_argument("-s", "--separator", type=str,
+                           help="group separator (defaults to whitespace)")
+    sep_group.add_argument("-n", "--no-separator", action='store_true',
+                           help="don't use separators, split on every byte")
 
     args = parser.parse_args()
 
@@ -43,10 +53,10 @@ def main():
     counts = {}
     symbols = {}
 
-    if args.separator is not None:
-        separator = args.separator
+    if args.no_separator:
+        separator = False
     else:
-        separator = None
+        separator = args.separator
 
     counts, symbols = transform_symbols(contents, separator)
 
@@ -56,7 +66,9 @@ def main():
     sorted_counts = sorted(counts.items(), key=lambda t: t[1])
     sorted_counts.reverse()
     for item in sorted_counts:
-        print "\"%s\"\t%s\t%d" % (item[0], symbols[item[0]], item[1])
+        print "\"%s\"\t%s\t%d" % (
+            etao.escape_nonprintables(item[0]),
+            symbols[item[0]], item[1])
 
 if __name__ == "__main__":
     main()
