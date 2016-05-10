@@ -27,7 +27,7 @@ def main():
 
     # Get values
     shift = args.shift_amount
-    mod = args.modulo
+    mod = args.modulus
 
     # Load the bytes
     data = bytearray()
