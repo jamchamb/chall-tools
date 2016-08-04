@@ -11,17 +11,14 @@ import etao
 SYMBOL_TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
 
-def transform_symbols(ciphertext, separator):
+def transform_symbols(ciphertext):
+    """Transform each multi-character symbol into a single character.
+       Returns count and symbol dictionary for each group."""
     counts = {}
     symbols = {}
     symbol = 0
 
-    if separator is False:
-        contents = ciphertext
-    else:
-        contents = ciphertext.split(separator)
-
-    for group in contents:
+    for group in ciphertext:
         if group in counts:
             counts[group] += 1
         else:
@@ -30,6 +27,44 @@ def transform_symbols(ciphertext, separator):
             symbol += 1
 
     return (counts, symbols)
+
+
+def transform_text(ciphertext, symbols):
+    """Translate the original ciphertext into a single character based
+       ciphertext using the symbol table."""
+
+    result = ''
+
+    for group in ciphertext:
+        if group in symbols:
+            result += symbols[group]
+        else:
+            result += '(%s)' % (group)
+
+    return result
+
+
+def guess_plaintext(ciphertext, counts, symbols):
+    """Do a single naive substitution based on frequency."""
+    freq_vector = sorted(etao.frequencies.ENGLISH_FREQ.items(),
+                         key=lambda t: t[1])
+    freq_vector.reverse()
+
+    sorted_counts = sorted(counts.items(), key=lambda t: t[1])
+    sorted_counts.reverse()
+
+    ordered_counts = [x[0] for x in sorted_counts]
+
+    result = ''
+
+    for group in ciphertext:
+        group_index = ordered_counts.index(group)
+        if group_index < len(freq_vector):
+            result += freq_vector[group_index][0]
+        else:
+            result += '(%s)' % (symbols[group])
+
+    return result
 
 
 def main():
@@ -53,12 +88,10 @@ def main():
     counts = {}
     symbols = {}
 
-    if args.no_separator:
-        separator = False
-    else:
-        separator = args.separator
+    if not args.no_separator:
+        contents = contents.split(args.separator)
 
-    counts, symbols = transform_symbols(contents, separator)
+    counts, symbols = transform_symbols(contents)
 
     print "Size of table: ", len(counts)
 
@@ -69,6 +102,14 @@ def main():
         print "\"%s\"\t%s\t%d" % (
             etao.escape_nonprintables(item[0]),
             symbols[item[0]], item[1])
+
+    transformed = transform_text(contents, symbols)
+
+    print '\nTransformed ciphertext:'
+    print transformed
+
+    #print '\nNaive plaintext guess:'
+    #print guess_plaintext(contents, counts, symbols)
 
 if __name__ == "__main__":
     main()
