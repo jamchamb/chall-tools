@@ -46,7 +46,7 @@ def transform_text(ciphertext, symbols):
 
 def guess_plaintext(ciphertext, counts, symbols):
     """Do a single naive substitution based on frequency."""
-    freq_vector = sorted(etao.frequencies.ENGLISH_FREQ.items(),
+    freq_vector = sorted(etao.freq.ENGLISH_FREQ.items(),
                          key=lambda t: t[1])
     freq_vector.reverse()
 

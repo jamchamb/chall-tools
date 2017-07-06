@@ -15,7 +15,8 @@ def main():
 
     # Score each shift according to English character frequency.
     # Get tuples that pair the score with the text.
-    scored_shifts = map(lambda x: (etao.score_text(x), x), shifts)
+    scorer = etao.NgramFrequencyScorer()
+    scored_shifts = map(lambda x: (scorer.score(x), x), shifts)
 
     # Sort by score, descending order
     scored_shifts.sort(reverse=True)
